@@ -15,7 +15,7 @@ function Header() {
         className={`header ${location.pathname !== "/" ? "header_white" : ""}`}
       >
         <Link className="header__logo" to="/" />
-        {!loggedIn ? (
+        {loggedIn ? (
           <ul className="header__blok">
             <li>
               <Link to="/signup" className="header__link header__link_register">

@@ -27,12 +27,12 @@ function AboutProject() {
       </ul>
       <div className="about__develop">
         <div className="about__develop-container">
-          <p className="about__develop-container_week">1 неделя</p>
-          <p className="about__develop-container_week">4 недели</p>
+          <p className="about__develop-week">1 неделя</p>
+          <p className="about__develop-week">4 недели</p>
         </div>
         <div className="about__develop-container">
-          <p className="about__develop-container_text">Back-end</p>
-          <p className="about__develop-container_text">Front-end</p>
+          <p className="about__develop-text">Back-end</p>
+          <p className="about__develop-text">Front-end</p>
         </div>
       </div>
     </section>

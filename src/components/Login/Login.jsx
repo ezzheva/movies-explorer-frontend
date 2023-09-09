@@ -12,24 +12,24 @@ function Register() {
       textLink="Регистрация"
       linkTo="/signup"
     >
-      <label className="auth__form_label">
+      <label className="auth__label">
         E-mail
         <input
-          className="auth__form_input"
+          className="auth__input"
           type="email"
           name="email"
           placeholder=""
           required
         />
       </label>
-      <span className="auth__form_input-error email-error">
+      <span className="auth__input-error email-error">
         Что-то пошло не так...
       </span>
 
-      <label className="auth__form_label">
+      <label className="auth__label">
         Пароль
         <input
-          className="auth__form_input"
+          className="auth__input"
           type="password"
           name="password"
           placeholder="Пароль"
@@ -37,7 +37,7 @@ function Register() {
           required
         />
       </label>
-      <span className="auth__form_input-error password-error">
+      <span className="auth__input-error password-error">
         Что-то пошло не так...
       </span>
     </AuthWithForm>

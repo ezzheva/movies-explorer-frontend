@@ -28,7 +28,7 @@ function AuthWithForm({
           </button>
           <p className="auth__text">
             {text}
-            <Link to={linkTo} className="auth__text_link">
+            <Link to={linkTo} className="auth__link">
               {textLink}
             </Link>
           </p>
