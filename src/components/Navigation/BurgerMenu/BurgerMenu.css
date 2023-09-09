@@ -1,0 +1,148 @@
+.burger__button {
+  background: url(../../image/icon_burger_menu_white.svg);
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin: 0;
+  display: none;
+  border: none;
+  cursor: pointer;
+}
+
+.burger__button:hover {
+  opacity: 0.8;
+}
+
+.burger__button_black {
+  background: url(../../image/icon_burger_menu.svg);
+}
+
+.burger__close {
+  background: url(../../image/icon_close_burger.svg);
+  position: absolute;
+  background-size: cover;
+  top: 25.44px;
+  right: 26.44px;
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  border: none;
+  padding: 0;
+}
+
+.burger__close:hover {
+  opacity: 0.8;
+}
+
+.burger__overlay {
+  position: fixed;
+  top: 0;
+  left: 0px;
+  width: 100vw;
+  height: 100vh;
+  z-index: 200;
+  background: rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: flex-end;
+}
+
+.burger__box {
+  background-color: #fff;
+  width: 520px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 159px 90px 90px;
+  box-sizing: border-box;
+}
+
+.burger__links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  justify-items: center;
+  row-gap: 30px;
+}
+
+.burger__link {
+  font-size: 18px;
+  font-weight: 500;
+  line-height: normal;
+  text-decoration: none;
+  color: #000;
+  transition: all 0.3s linear;
+}
+
+.burger__link:hover {
+  opacity: 0.7;
+}
+.burger__link_active {
+  border-bottom: 2px solid #000;
+  padding-bottom: 4px;
+}
+
+.burger__link-profile {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  color: #000;
+  font-size: 13px;
+  line-height: 12px;
+  width: 100px;
+  height: 32px;
+  background: #fff;
+  border-radius: 40px;
+  text-decoration: none;
+  box-shadow: 0px 3px 14px 0px rgba(0, 0, 0, 0.08);
+  padding-left: 7px;
+  transition: all 0.3s linear;
+}
+
+.burger__link-profile:hover {
+  opacity: 0.7;
+}
+
+.burger__link-profile-img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50px;
+  background: #f9f9f9;
+}
+
+@media screen and (max-width: 768px) {
+  .burger__button {
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .burger__box {
+    padding: 144px 10px 46px;
+  }
+
+  .burger__links {
+    row-gap: 26px;
+  }
+
+  .burger__close {
+    top: 17.44px;
+    right: 18.44px;
+  }
+
+  .burger__link_active {
+    max-width: 72px;
+    padding-bottom: 7px;
+  }
+
+  .burger__button {
+    width: 37px;
+    height: 50px;
+    background-size: 34px 50px;
+  }
+}
