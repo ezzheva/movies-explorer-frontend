@@ -15,19 +15,15 @@ function Header() {
         className={`header ${location.pathname !== "/" ? "header_white" : ""}`}
       >
         <Link className="header__logo" to="/" />
-        {loggedIn ? (
-          <ul className="header__blok">
-            <li>
-              <Link to="/signup" className="header__link header__link_register">
-                Регистация
-              </Link>
-            </li>
-            <li>
-              <Link to="/signin" className="header__link header__link_login">
-                Войти
-              </Link>
-            </li>
-          </ul>
+        {!loggedIn ? (
+          <nav className="header__blok">
+            <Link to="/signup" className="header__link header__link_register">
+              Регистрация
+            </Link>
+            <Link to="/signin" className="header__link header__link_login">
+              Войти
+            </Link>
+          </nav>
         ) : (
           <>
             <Navigation />

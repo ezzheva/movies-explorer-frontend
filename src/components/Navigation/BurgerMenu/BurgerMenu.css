@@ -1,4 +1,4 @@
-.burger__button {
+.header__burger-button {
   background: url(../../image/icon_burger_menu_white.svg);
   width: 44px;
   height: 44px;
@@ -9,15 +9,15 @@
   cursor: pointer;
 }
 
-.burger__button:hover {
+.header__burger-button:hover {
   opacity: 0.8;
 }
 
-.burger__button_black {
+.header__burger-button_black {
   background: url(../../image/icon_burger_menu.svg);
 }
 
-.burger__close {
+.header__burger-close {
   background: url(../../image/icon_close_burger.svg);
   position: absolute;
   background-size: cover;
@@ -30,11 +30,11 @@
   padding: 0;
 }
 
-.burger__close:hover {
+.header__burger-close:hover {
   opacity: 0.8;
 }
 
-.burger__overlay {
+.header__burger-overlay {
   position: fixed;
   top: 0;
   left: 0px;
@@ -46,7 +46,7 @@
   justify-content: flex-end;
 }
 
-.burger__box {
+.header__burger-box {
   background-color: #fff;
   width: 520px;
   height: 100vh;
@@ -58,7 +58,7 @@
   box-sizing: border-box;
 }
 
-.burger__links {
+.header__burger-links {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -67,7 +67,7 @@
   row-gap: 30px;
 }
 
-.burger__link {
+.header__burger-link {
   font-size: 18px;
   font-weight: 500;
   line-height: normal;
@@ -76,15 +76,16 @@
   transition: all 0.3s linear;
 }
 
-.burger__link:hover {
+.header__burger-link:hover {
   opacity: 0.7;
 }
-.burger__link_active {
+
+.header__burger-link_active {
   border-bottom: 2px solid #000;
   padding-bottom: 4px;
 }
 
-.burger__link-profile {
+.header__burger-link-profile {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
@@ -101,11 +102,11 @@
   transition: all 0.3s linear;
 }
 
-.burger__link-profile:hover {
+.header__burger-link-profile:hover {
   opacity: 0.7;
 }
 
-.burger__link-profile-img {
+.header__burger-link-profile-img {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -116,33 +117,33 @@
 }
 
 @media screen and (max-width: 768px) {
-  .burger__button {
+  .header__burger-button {
     display: flex;
   }
 }
 
-@media screen and (max-width: 320px) {
-  .burger__box {
+@media screen and (max-width: 400px) {
+  .header__burger-box {
     padding: 144px 10px 46px;
   }
 
-  .burger__links {
+  .header__burger-links {
     row-gap: 26px;
   }
 
-  .burger__close {
+  .header__burger-close {
     top: 17.44px;
     right: 18.44px;
   }
 
-  .burger__link_active {
+  .header__burger-link_active {
     max-width: 72px;
     padding-bottom: 7px;
   }
 
-  .burger__button {
+  .header__burger-button {
     width: 37px;
-    height: 50px;
-    background-size: 34px 50px;
+    height: 51px;
+    background-size: 35px 51px;
   }
 }

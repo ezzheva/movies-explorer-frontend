@@ -24,7 +24,8 @@
 
 .header__blok {
   display: flex;
-  column-gap: 39px;
+  align-items: center;
+  column-gap: 31px;
   list-style: none;
   padding: 0;
   margin: 0;
@@ -35,6 +36,7 @@
   border-radius: 3px;
   background: #2be080;
   padding: 8px 20px;
+  transition: all 0.3s linear;
 }
 
 .header__link_register {
@@ -61,10 +63,16 @@
   .header {
     padding: 0 30px;
   }
+  .header__link_register {
+    line-height: 16px;
+  }
 }
 
 @media screen and (max-width: 320px) {
   .header {
     padding: 0 14px;
+  }
+  .header__link_login {
+    font-size: 10px;
   }
 }

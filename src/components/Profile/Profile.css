@@ -46,6 +46,10 @@
   width: 50%;
 }
 
+.profile__input:focus {
+  border: 0;
+}
+
 .profile__button {
   margin-top: 220px;
   display: flex;

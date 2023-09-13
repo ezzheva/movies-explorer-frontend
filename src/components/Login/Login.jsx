@@ -18,13 +18,13 @@ function Register() {
           className="auth__input"
           type="email"
           name="email"
-          placeholder=""
+          placeholder="E-mail"
           required
         />
+        <span className="auth__input-error email-error">
+          Что-то пошло не так...
+        </span>
       </label>
-      <span className="auth__input-error email-error">
-        Что-то пошло не так...
-      </span>
 
       <label className="auth__label">
         Пароль
@@ -33,13 +33,14 @@ function Register() {
           type="password"
           name="password"
           placeholder="Пароль"
-          minLength="6"
+          minLength="4"
+          maxLength="30"
           required
         />
+        <span className="auth__input-error password-error">
+          Что-то пошло не так...
+        </span>
       </label>
-      <span className="auth__input-error password-error">
-        Что-то пошло не так...
-      </span>
     </AuthWithForm>
   );
 }

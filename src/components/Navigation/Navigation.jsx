@@ -7,34 +7,33 @@ function Navigation() {
   const replaceColor = location.pathname !== "/";
   return (
     <>
-      <nav className="nav__menu">
-        <ul className="nav__movies">
-          <li>
-            <Link
-              to="/movies"
-              className={`nav__link  ${replaceColor ? "nav__link_black" : ""}`}
-            >
-              Фильмы
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/saved-movies"
-              className={`nav__link  ${replaceColor ? "nav__link_black" : ""}`}
-            >
-              Сохранённые фильмы
-            </Link>
-          </li>
-        </ul>
+      <nav className="header__movies">
         <Link
-          to="/profile"
-          className={`nav__link nav__link-profile ${
-            replaceColor ? "nav__link-profile_white" : ""
+          to="/movies"
+          className={`header__movies-link  ${
+            replaceColor ? "header__movies-link_black" : ""
           }`}
         >
-          Аккаунт
+          Фильмы
+        </Link>
+        <Link
+          to="/saved-movies"
+          className={`header__movies-link  ${
+            replaceColor ? "header__movies-link_black" : ""
+          }`}
+        >
+          Сохранённые фильмы
         </Link>
       </nav>
+
+      <Link
+        to="/profile"
+        className={`header__link header__movies header__link-profile ${
+          replaceColor ? "header__link-profile_white" : ""
+        }`}
+      >
+        Аккаунт
+      </Link>
     </>
   );
 }

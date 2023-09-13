@@ -13,15 +13,15 @@ function BurgerMenu() {
   }
   /** проверка активность страницы на которой находимся */
   function activeLink(currentPath, targetPath) {
-    return currentPath === targetPath ? "burger__link_active" : "";
+    return currentPath === targetPath ? "header__burger-link_active" : "";
   }
 
   return (
     <>
       {!isOpen ? (
         <button
-          className={`burger__button ${
-            location.pathname !== "/" ? "burger__button_black" : ""
+          className={`header__burger-button ${
+            location.pathname !== "/" ? "header__burger-button_black" : ""
           }`}
           type="button"
           aria-label="Открыть меню"
@@ -29,13 +29,13 @@ function BurgerMenu() {
         />
       ) : (
         <>
-          <div className="burger__overlay">
-            <nav className="burger__box">
-              <ul className="burger__links">
+          <div className="header__burger-overlay">
+            <nav className="header__burger-box">
+              <ul className="header__burger-links">
                 <li>
                   <Link
                     to="/"
-                    className={`burger__link ${activeLink(
+                    className={`header__burger-link ${activeLink(
                       location.pathname,
                       "/"
                     )}`}
@@ -46,7 +46,7 @@ function BurgerMenu() {
                 <li>
                   <Link
                     to="/movies"
-                    className={`burger__link ${activeLink(
+                    className={`header__burger-link ${activeLink(
                       location.pathname,
                       "/movies"
                     )}`}
@@ -57,7 +57,7 @@ function BurgerMenu() {
                 <li>
                   <Link
                     to="/saved-movies"
-                    className={`burger__link ${activeLink(
+                    className={`header__burger-link ${activeLink(
                       location.pathname,
                       "/saved-movies"
                     )}`}
@@ -67,15 +67,15 @@ function BurgerMenu() {
                 </li>
               </ul>
               <button
-                className="burger__close"
+                className="header__burger-close"
                 type="button"
                 aria-label="Закрыть меню"
                 onClick={hendleMenu}
               />
 
-              <Link to="/profile" className=" burger__link-profile">
+              <Link to="/profile" className="header__burger-link-profile">
                 Аккаунт
-                <div className="burger__link-profile-img">
+                <div className="header__burger-link-profile-img">
                   <img src={IconProfile} alt="Иконка профиля" />
                 </div>
               </Link>

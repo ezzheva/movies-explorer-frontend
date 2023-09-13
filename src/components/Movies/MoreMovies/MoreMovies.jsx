@@ -7,7 +7,7 @@ function MoreMovies() {
       <button
         className="more-movies__button"
         aria-label="button-more"
-        type="botton"
+        type="button"
       >
         Ещё
       </button>
