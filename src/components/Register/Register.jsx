@@ -1,8 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Register.css";
 import AuthWithForm from "../AuthWithForm/AuthWithForm";
+import useForm from "../../hooks/useForm";
 
-function Register() {
+function Register({ onRegister, loggedIn }) {
+  const { values, handleChange, setValues } = useForm({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    onRegister(values);
+  }
+
+  useEffect(() => {
+    setValues({ name: "", email: "", password: "" });
+  }, [setValues]);
+
   return (
     <AuthWithForm
       nameForm="register"
@@ -11,6 +27,7 @@ function Register() {
       text="Уже зарегистрированы?"
       textLink="Войти"
       linkTo="/signin"
+      onSubmit={handleSubmit}
     >
       <label className="auth__label">
         Имя
@@ -22,6 +39,8 @@ function Register() {
           minLength="2"
           maxLength="30"
           required
+          value={values.name || ""}
+          onChange={handleChange}
         />
       </label>
       <span className="auth__input-error name-error">
@@ -36,6 +55,8 @@ function Register() {
           name="email"
           placeholder="E-mail"
           required
+          value={values.email || ""}
+          onChange={handleChange}
         />
       </label>
       <span className="auth__input-error email-error">
@@ -52,6 +73,8 @@ function Register() {
           minLength="4"
           maxLength="30"
           required
+          value={values.password || ""}
+          onChange={handleChange}
         />
       </label>
       <span className="auth__input-error password-error">

@@ -10,13 +10,14 @@ function AuthWithForm({
   text,
   textLink,
   linkTo,
+  onSubmit,
 }) {
   return (
     <main>
       <section className="auth">
         <Link to="/" className="auth__logo" />
         <h1 className="auth__title">{title}</h1>
-        <form className="auth__form" name={nameForm}>
+        <form className="auth__form" name={nameForm} onSubmit={onSubmit}>
           {children && <div className="auth__input-login">{children}</div>}
 
           <div className="auth__button">

@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Header.css";
 import { Link, useLocation } from "react-router-dom";
 import Navigation from "../Navigation/Navigation";
 import BurgerMenu from "../Navigation/BurgerMenu/BurgerMenu";
 
-function Header() {
-  /**статус входа */
-  const [loggedIn, setLoggedIn] = useState(false);
+function Header({ loggedIn }) {
   const location = useLocation();
 
   return (

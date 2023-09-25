@@ -1,8 +1,27 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import "./Login.css";
 import AuthWithForm from "../AuthWithForm/AuthWithForm";
+import useForm from "../../hooks/useForm";
 
-function Register() {
+function Login({ onLogin, loggedIn }) {
+  const { values, handleChange, setValues } = useForm({
+    email: "",
+    password: "",
+  });
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    onLogin(values);
+  }
+
+  useEffect(() => {
+    setValues({ email: "", password: "" });
+  }, [setValues]);
+
+  if (loggedIn) {
+    return <Navigate to="/movies" />;
+  }
   return (
     <AuthWithForm
       nameForm="login"
@@ -11,6 +30,7 @@ function Register() {
       text="Ещё не зарегистрированы?"
       textLink="Регистрация"
       linkTo="/signup"
+      onSubmit={handleSubmit}
     >
       <label className="auth__label">
         E-mail
@@ -20,6 +40,8 @@ function Register() {
           name="email"
           placeholder="E-mail"
           required
+          onChange={handleChange}
+          value={values.email || ""}
         />
         <span className="auth__input-error email-error">
           Что-то пошло не так...
@@ -36,6 +58,8 @@ function Register() {
           minLength="4"
           maxLength="30"
           required
+          onChange={handleChange}
+          value={values.password || ""}
         />
         <span className="auth__input-error password-error">
           Что-то пошло не так...
@@ -45,4 +69,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Login;
