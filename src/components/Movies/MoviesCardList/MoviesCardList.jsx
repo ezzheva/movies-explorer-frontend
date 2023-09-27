@@ -10,9 +10,7 @@ function MoviesCardList({ movies, isLoading, errorSearch }) {
   return (
     <section className="movies">
       <span className="movies__error">{errorSearch}</span>
-      {/* {isLoading ? <Preloader /> : */}
-      <ul className="movie">{moviesElements}</ul>
-      {/* } */}
+      {isLoading ? <Preloader /> : <ul className="movie">{moviesElements}</ul>}
     </section>
   );
 }

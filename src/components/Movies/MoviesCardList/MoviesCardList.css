@@ -12,7 +12,7 @@
   gap: 36px 20px;
 }
 
-/* .movies__error {
+.movies__error {
   display: flex;
   padding-bottom: 10px;
   justify-content: center;
@@ -21,8 +21,7 @@
   font-size: 12px;
   font-weight: 500;
   margin: 0;
-  opacity: 1;
-} */
+}
 
 @media screen and (max-width: 1000px) {
   .movies {
