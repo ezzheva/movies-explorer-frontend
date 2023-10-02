@@ -8,7 +8,7 @@ function MoreMovies({ handleMoreButton }) {
         className="more-movies__button"
         aria-label="button-more"
         type="button"
-        handleMoreButton={handleMoreButton}
+        onClick={handleMoreButton}
       >
         Ещё
       </button>

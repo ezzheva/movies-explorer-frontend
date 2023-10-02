@@ -33,38 +33,71 @@ export const authorize = (email, password) => {
   }).then(checkError);
 };
 
-export const getContent = (token) => {
+export const getContent = () => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   }).then(checkError);
 };
 
 /**получение с сервера данных */
-export const getUserInfo = (token) => {
+export const getUserInfo = () => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   }).then(checkError);
 };
 
 /**изменение данных с сервера */
-export const patchUserInfo = (data, token) => {
+export const patchUserInfo = (data) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${token}`,
+      authorization: `Bearer ${localStorage.getItem("token")}`,
     },
     body: JSON.stringify({
       name: data.name,
       email: data.email,
     }),
+  }).then(checkError);
+};
+
+export const getMovies = () => {
+  return fetch(`${BASE_URL}/movies`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  }).then(checkError);
+};
+
+/**добавление сохраненных фильмов на страницу */
+export const addSavedMovies = (movie) => {
+  return fetch(`${BASE_URL}/movies`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify(movie),
+  }).then(checkError);
+};
+
+/**удаление фильмов */
+export const deleteMovie = (movieId) => {
+  return fetch(`${BASE_URL}/movies/${movieId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
   }).then(checkError);
 };

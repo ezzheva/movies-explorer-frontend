@@ -18,6 +18,11 @@ function Profile({ loggedIn, setLoggedIn, setCurrentUser }) {
   const [isSubmit, setIsSubmit] = useState(false); //кнопка редактирования
   const [isSuccessMessage, setIsSuccessMessage] = useState(false); //состояние ошибки
 
+  function handleChangeInput(evt) {
+    handleChange(evt);
+    setIsSuccessMessage("");
+  }
+
   /**показываем кнопку сохранить */
   function handleSaveButton(evt) {
     evt.preventDefault();
@@ -27,7 +32,6 @@ function Profile({ loggedIn, setLoggedIn, setCurrentUser }) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    // if (values.email && values.name) {
     handleUpdateUser(values);
   }
   /**редактирование провиля */
@@ -56,12 +60,14 @@ function Profile({ loggedIn, setLoggedIn, setCurrentUser }) {
     if (currentUser) {
       setValues(currentUser);
       setIsSubmit(false);
+      setIsSuccessMessage("");
     }
   }, [currentUser, setValues]);
 
   /**удаляем токен, выходим из системы */
   function singOut() {
-    localStorage.removeItem("token");
+    // localStorage.removeItem("token");
+    localStorage.clear();
     navigate("/");
     setLoggedIn(false);
     setCurrentUser({});
@@ -84,7 +90,7 @@ function Profile({ loggedIn, setLoggedIn, setCurrentUser }) {
                 maxLength="40"
                 required
                 value={values.name || ""}
-                onChange={handleChange}
+                onChange={handleChangeInput}
                 pattern={REGEX_NAME}
               ></input>
             </label>
@@ -101,7 +107,7 @@ function Profile({ loggedIn, setLoggedIn, setCurrentUser }) {
                 maxLength="40"
                 required
                 value={values.email || ""}
-                onChange={handleChange}
+                onChange={handleChangeInput}
                 pattern={REGEX_EMAIL}
               ></input>
             </label>
@@ -126,7 +132,11 @@ function Profile({ loggedIn, setLoggedIn, setCurrentUser }) {
               )}
 
               {isSubmit && (
-                <button className="profile__button-save" type="submit">
+                <button
+                  className="profile__button-save"
+                  type="submit"
+                  disabled={!isValid}
+                >
                   Сохранить
                 </button>
               )}

@@ -1,4 +1,4 @@
-export const filterWordMovies = (moviesList, searchWord) => {
+export const filterWord = (moviesList, searchWord) => {
   return moviesList.filter((movies) => {
     return (
       movies.nameRU.toLowerCase().includes(searchWord.toLowerCase()) ||
@@ -7,7 +7,7 @@ export const filterWordMovies = (moviesList, searchWord) => {
   });
 };
 
-export const filterShortMovies = (moviesList, isToggle) => {
+export const filterShort = (moviesList, isToggle) => {
   if (isToggle) {
     return moviesList.filter((movies) => movies.duration <= 40);
   }

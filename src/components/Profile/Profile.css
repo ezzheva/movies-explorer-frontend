@@ -87,6 +87,11 @@
   opacity: 0.8;
 }
 
+.profile__button-save:disabled {
+  pointer-events: none;
+  background: #f8f8f8;
+}
+
 .profile__button-edit {
   font-size: 13px;
   font-weight: 400;

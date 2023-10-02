@@ -1,5 +1,9 @@
 .movies {
   padding: 46px 70px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .movie {
@@ -7,7 +11,7 @@
   padding: 0;
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 270px));
   justify-content: center;
   gap: 36px 20px;
 }
@@ -29,7 +33,7 @@
   }
 
   .movie {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 339px));
     padding: 50px 30px;
     gap: 28px 30px;
   }
@@ -37,7 +41,7 @@
 
 @media screen and (max-width: 600px) {
   .movie {
-    grid-template-columns: repeat(1, 1fr);
+    grid-template-columns: repeat(1, minmax(0, 300px));
     padding: 6px 10px;
     row-gap: 30px;
   }

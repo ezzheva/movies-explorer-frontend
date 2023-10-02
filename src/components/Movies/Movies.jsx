@@ -1,16 +1,18 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../Header/Header";
 import SearchForm from "./SearchForm/SearchForm";
 import MoviesCardList from "./MoviesCardList/MoviesCardList";
 import Footer from "../Footer/Footer";
 import MoreMovies from "./MoreMovies/MoreMovies";
 import * as MoviesApi from "../../utils/MoviesApi";
-import { filterWordMovies, filterShortMovies } from "../../utils/filterMovies";
+import { filterWord, filterShort } from "../../utils/filterMovies";
+import * as MainApi from "../../utils/MainApi";
 
 function Movies({ loggedIn }) {
   const [movies, setMovies] = useState(
     JSON.parse(localStorage.getItem("movies")) || []
   ); //все фильмы
+
   const [filterMovies, setFilterMovies] = useState(
     JSON.parse(localStorage.getItem("filtermovies")) || []
   );
@@ -23,20 +25,20 @@ function Movies({ loggedIn }) {
     localStorage.getItem("searchWord") || ""
   );
 
-  // const [savedMovies, setSavedMovies] = useState([]); //ссохраненные фильны
-
   const [isLoading, setIsLoading] = useState(false); //состояние запроса
   const [errorSearch, setErrorSearch] = useState(""); // стейт-переменная для отображения ошибки
 
+  const [displayedMovies, setDisplayedMovies] = useState(0);
 
-
+  const [saveMovies, setSaveMovies] = useState(
+    JSON.parse(localStorage.getItem("savedMovies")) || []
+  ); //сохраненные фильмы
 
   function handleSubmit() {
     const storage = localStorage.getItem("movies");
     if (storage) {
-      const filteredMovies = filterWordMovies(JSON.parse(storage), searchWord);
-      const filteredCheckbox = filterShortMovies(filteredMovies, isToggle);
-
+      const filteredMovies = filterWord(JSON.parse(storage), searchWord);
+      const filteredCheckbox = filterShort(filteredMovies, isToggle);
       localStorage.setItem("searchWord", searchWord);
       localStorage.setItem("filtermovies", JSON.stringify(filteredCheckbox));
       setFilterMovies(filteredCheckbox);
@@ -49,8 +51,8 @@ function Movies({ loggedIn }) {
       setIsLoading(true);
       MoviesApi.getInitialMovies()
         .then((res) => {
-          const filteredMovies = filterWordMovies(res, searchWord);
-          const filteredCheckbox = filterShortMovies(filteredMovies, isToggle);
+          const filteredMovies = filterWord(res, searchWord);
+          const filteredCheckbox = filterShort(filteredMovies, isToggle);
           setMovies(res);
           setFilterMovies(filteredCheckbox);
           // Сохраняем фильмы в localStorage
@@ -71,35 +73,78 @@ function Movies({ loggedIn }) {
           setErrorSearch(
             "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз."
           );
-          console.log(err);
         })
         .finally(() => {
           setIsLoading(false);
         });
+
+      MainApi.getMovies()
+        .then((res) => {
+          setSaveMovies(res);
+          localStorage.setItem("savedMovies", JSON.stringify(res));
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+        .finally(() => setIsLoading(false));
+
+      setDisplayedMovies(getInitialDisplayedMovies());
     }
   }
+
+  const moviesSave = filterMovies.map((item) => {
+    const isSaved =
+      saveMovies.find((saveMovie) => saveMovie.movieId === item.id) !==
+      undefined;
+    return { ...item, isSaved };
+  });
 
   //Функция для чекбокса
   function handleToggle(evt) {
     const checkbox = evt.target.checked;
     setIsToggle(checkbox);
     localStorage.setItem("checked", checkbox);
-    const filteredCheckbox = filterShortMovies(movies, checkbox);
+    const filteredMovies = filterWord(movies, searchWord);
+    const filteredCheckbox = filterShort(filteredMovies, checkbox);
     setFilterMovies(filteredCheckbox);
     localStorage.setItem("filtermovies", JSON.stringify(filteredCheckbox));
   }
 
-  //Функция, определяющая сколько карточек отобразить
-  // function getFilmsToShow() {
-  //   return window.innerWidth >= 550 ? 12 : 5;
-  // }
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+    setDisplayedMovies(getInitialDisplayedMovies());
 
-  //Функция, которая добавляет поределённое количество фильмов к найденным фильмам
-  // function handleMoreFilms() {
-  //   const newFilmsToShow =
-  //     window.innerWidth >= 550 ? filmsToShow + 3 : filmsToShow + 2;
-  //   setFilmsToShow(newFilmsToShow);
-  // }
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  function handleResize() {
+    setDisplayedMovies(getInitialDisplayedMovies());
+  }
+
+  function getInitialDisplayedMovies() {
+    if (window.innerWidth >= 768) {
+      return 16;
+    } else if (window.innerWidth < 768 && window.innerWidth >= 600) {
+      return 8;
+    } else {
+      return 5;
+    }
+  }
+
+  function handleMoreButton() {
+    const newDisplayedMovies =
+      window.innerWidth >= 768 ? displayedMovies + 4 : displayedMovies + 2;
+
+    if (newDisplayedMovies > filterMovies.length) {
+      setDisplayedMovies(filterMovies.length);
+    } else {
+      setDisplayedMovies(newDisplayedMovies);
+    }
+  }
+
+  const displayedMoviesList = moviesSave.slice(0, displayedMovies);
 
   return (
     <>
@@ -113,19 +158,15 @@ function Movies({ loggedIn }) {
           isToggle={isToggle}
         />
         <MoviesCardList
-          movies={filterMovies}
+          movies={displayedMoviesList}
           isLoading={isLoading}
           errorSearch={errorSearch}
+          saveMovies={saveMovies}
+          setSaveMovies={setSaveMovies}
         />
-         <MoreMovies />
-        {/* {!error &&
-          filteredMovies.length !== 0 &&
-          visibleMoviesCount < filteredMovies.length && (
-            <MoviesMoreButton
-              windowWidth={windowWidth}
-              setVisibleMoviesCount={setVisibleMoviesCount}
-            />
-          )} */}
+        {displayedMovies < filterMovies.length && (
+          <MoreMovies handleMoreButton={handleMoreButton} />
+        )}
       </main>
       <Footer />
     </>

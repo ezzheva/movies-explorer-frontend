@@ -33,10 +33,6 @@
   font-weight: 400;
   line-height: normal;
 }
-/*
-.search__error_active {
-  opacity: 1;
-} */
 
 .search__button {
   background: url(../../image/search_button.svg);
@@ -65,10 +61,11 @@
   .search {
     padding: 84px 13px;
   }
+
   .search__input {
     font-size: 18px;
-    width: 70%;
   }
+
   .search__form {
     padding-bottom: 9px;
   }
