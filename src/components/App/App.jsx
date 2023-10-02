@@ -10,7 +10,6 @@ import Profile from "../Profile/Profile";
 import NotFound from "../NotFound/NotFound";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import * as MainApi from "../../utils/MainApi";
-//import * as MoviesApi from "../../utils/MoviesApi";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function App() {
@@ -19,7 +18,6 @@ function App() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  // const path = location.pathname;
 
   //регистрация пользователя
   function handleRegister({ name, email, password }) {
@@ -99,7 +97,6 @@ function App() {
                 loggedIn={loggedIn}
                 setLoggedIn={setLoggedIn}
                 setCurrentUser={setCurrentUser}
-                // onUpdateUser={handleUpdateUser}
               />
             }
           />

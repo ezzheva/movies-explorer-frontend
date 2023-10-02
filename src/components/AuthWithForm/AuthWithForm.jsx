@@ -11,6 +11,7 @@ function AuthWithForm({
   textLink,
   linkTo,
   onSubmit,
+  isValid,
 }) {
   return (
     <main>
@@ -21,13 +22,16 @@ function AuthWithForm({
           {children && <div className="auth__input-login">{children}</div>}
 
           <div className="auth__button">
-            <button
-              type="submit"
-              className="auth__submit-button"
-              aria-label="submit-button"
-            >
-              {button}
-            </button>
+            {onSubmit && (
+              <button
+                type="submit"
+                className="auth__submit-button"
+                aria-label="submit-button"
+                disabled={!isValid}
+              >
+                {button}
+              </button>
+            )}
             <p className="auth__text">
               {text}
               <Link to={linkTo} className="auth__link">

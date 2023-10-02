@@ -66,7 +66,6 @@ function Profile({ loggedIn, setLoggedIn, setCurrentUser }) {
 
   /**удаляем токен, выходим из системы */
   function singOut() {
-    // localStorage.removeItem("token");
     localStorage.clear();
     navigate("/");
     setLoggedIn(false);

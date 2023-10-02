@@ -66,10 +66,10 @@
   border-bottom: 1px solid #3456f3;
 }
 
-.auth__input::placeholder {
+/* .auth__input::placeholder {
   visibility: hidden;
   color: #ff3055;
-}
+} */
 
 .auth__input-error {
   color: #ff3055;
@@ -77,12 +77,12 @@
   font-weight: 400;
   line-height: normal;
   min-height: 12px;
-  visibility: hidden;
+  /* visibility: hidden; */
 }
 
-.auth__input-error_active {
+/* .auth__input-error_active {
   visibility: visible;
-}
+} */
 
 .auth__button {
   display: flex;
@@ -90,6 +90,11 @@
   align-items: center;
   padding: 0;
   gap: 17px;
+}
+
+.auth__submit-button:disabled {
+  pointer-events: none;
+  background: #f8f8f8;
 }
 
 .auth__submit-button {

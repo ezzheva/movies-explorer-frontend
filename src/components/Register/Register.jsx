@@ -2,9 +2,10 @@ import React, { useEffect } from "react";
 import "./Register.css";
 import AuthWithForm from "../AuthWithForm/AuthWithForm";
 import useForm from "../../hooks/useForm";
+import { REGEX_NAME, REGEX_EMAIL } from "../../utils/constants";
 
-function Register({ onRegister, loggedIn }) {
-  const { values, handleChange, setValues } = useForm({
+function Register({ onRegister }) {
+  const { values, handleChange, setValues, errors, isValid } = useForm({
     name: "",
     email: "",
     password: "",
@@ -12,7 +13,9 @@ function Register({ onRegister, loggedIn }) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onRegister(values);
+    if (values.name && values.email && values.password) {
+      onRegister(values);
+    }
   }
 
   useEffect(() => {
@@ -35,33 +38,31 @@ function Register({ onRegister, loggedIn }) {
           className="auth__input"
           type="text"
           name="name"
-          placeholder="Имя"
+          placeholder="Введите Имя"
           minLength="2"
           maxLength="30"
           required
           value={values.name || ""}
           onChange={handleChange}
+          pattern={REGEX_NAME}
         />
       </label>
-      <span className="auth__input-error name-error">
-        Что-то пошло не так...
-      </span>
+      {!isValid && <span className="auth__input-error">{errors.name}</span>}
 
       <label className="auth__label">
         E-mail
         <input
           className="auth__input"
           type="email"
-          name="email"
+          name="Введите email"
           placeholder="E-mail"
           required
           value={values.email || ""}
           onChange={handleChange}
+          pattern={REGEX_EMAIL}
         />
       </label>
-      <span className="auth__input-error email-error">
-        Что-то пошло не так...
-      </span>
+      {!isValid && <span className="auth__input-error">{errors.email}</span>}
 
       <label className="auth__label">
         Пароль
@@ -77,9 +78,7 @@ function Register({ onRegister, loggedIn }) {
           onChange={handleChange}
         />
       </label>
-      <span className="auth__input-error password-error">
-        Что-то пошло не так...
-      </span>
+      {!isValid && <span className="auth__input-error">{errors.password}</span>}
     </AuthWithForm>
   );
 }
