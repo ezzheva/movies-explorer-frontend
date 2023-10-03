@@ -22,7 +22,6 @@ function Profile({
     email: "",
   });
   const [isSubmit, setIsSubmit] = useState(false); //кнопка редактирования
-  //const [isSuccessMessage, setIsSuccessMessage] = useState(""); //состояние ошибки
   const [isNameChanged, setIsNameChanged] = useState(false); //состояние изменения имени
   const [isEmailChanged, setIsEmailChanged] = useState(false); //состояние изменения email
 
