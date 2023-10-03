@@ -8,7 +8,13 @@ import * as MainApi from "../../utils/MainApi";
 import useForm from "../../hooks/useForm";
 import { REGEX_NAME, REGEX_EMAIL } from "../../utils/constants";
 
-function Profile({ loggedIn, setLoggedIn, setCurrentUser }) {
+function Profile({
+  loggedIn,
+  setLoggedIn,
+  setCurrentUser,
+  isSuccessMessage,
+  setIsSuccessMessage,
+}) {
   const navigate = useNavigate();
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid, setValues } = useForm({
@@ -16,18 +22,15 @@ function Profile({ loggedIn, setLoggedIn, setCurrentUser }) {
     email: "",
   });
   const [isSubmit, setIsSubmit] = useState(false); //кнопка редактирования
-  const [isSuccessMessage, setIsSuccessMessage] = useState(false); //состояние ошибки
-
-  function handleChangeInput(evt) {
-    handleChange(evt);
-    setIsSuccessMessage("");
-  }
+  //const [isSuccessMessage, setIsSuccessMessage] = useState(""); //состояние ошибки
+  const [isNameChanged, setIsNameChanged] = useState(false); //состояние изменения имени
+  const [isEmailChanged, setIsEmailChanged] = useState(false); //состояние изменения email
 
   /**показываем кнопку сохранить */
   function handleSaveButton(evt) {
     evt.preventDefault();
     setIsSubmit(true);
-    setIsSuccessMessage(false);
+    setIsSuccessMessage("");
   }
 
   function handleSubmit(evt) {
@@ -44,7 +47,7 @@ function Profile({ loggedIn, setLoggedIn, setCurrentUser }) {
           name: data.name,
           email: data.email,
         });
-        setIsSuccessMessage("Данные обновлены успешно!"); // Показать успешное сообщение
+        setIsSuccessMessage("Данные обновлены успешно!");
       })
       .catch((err) => {
         if (err.status === 409) {
@@ -60,7 +63,6 @@ function Profile({ loggedIn, setLoggedIn, setCurrentUser }) {
     if (currentUser) {
       setValues(currentUser);
       setIsSubmit(false);
-      setIsSuccessMessage("");
     }
   }, [currentUser, setValues]);
 
@@ -70,6 +72,23 @@ function Profile({ loggedIn, setLoggedIn, setCurrentUser }) {
     navigate("/");
     setLoggedIn(false);
     setCurrentUser({});
+  }
+
+  function handleChangeInput(evt) {
+    handleChange(evt);
+    setIsSuccessMessage("");
+
+    if (evt.target.name === "name" && evt.target.value !== currentUser.name) {
+      setIsNameChanged(true);
+    } else if (
+      evt.target.name === "email" &&
+      evt.target.value !== currentUser.email
+    ) {
+      setIsEmailChanged(true);
+    } else {
+      setIsNameChanged(false);
+      setIsEmailChanged(false);
+    }
   }
   return (
     <>
@@ -91,6 +110,7 @@ function Profile({ loggedIn, setLoggedIn, setCurrentUser }) {
                 value={values.name || ""}
                 onChange={handleChangeInput}
                 pattern={REGEX_NAME}
+                disabled={!isSubmit}
               ></input>
             </label>
             {!isValid && <span className="profile__error">{errors.name}</span>}
@@ -108,6 +128,7 @@ function Profile({ loggedIn, setLoggedIn, setCurrentUser }) {
                 value={values.email || ""}
                 onChange={handleChangeInput}
                 pattern={REGEX_EMAIL}
+                disabled={!isSubmit}
               ></input>
             </label>
             {!isValid && <span className="profile__error">{errors.email}</span>}
@@ -134,7 +155,7 @@ function Profile({ loggedIn, setLoggedIn, setCurrentUser }) {
                 <button
                   className="profile__button-save"
                   type="submit"
-                  disabled={!isValid}
+                  disabled={!isValid || (!isNameChanged && !isEmailChanged)}
                 >
                   Сохранить
                 </button>

@@ -3,9 +3,9 @@ import { Navigate } from "react-router-dom";
 import "./Login.css";
 import AuthWithForm from "../AuthWithForm/AuthWithForm";
 import useForm from "../../hooks/useForm";
-import { REGEX_NAME, REGEX_EMAIL } from "../../utils/constants";
+import { REGEX_EMAIL } from "../../utils/constants";
 
-function Login({ onLogin, loggedIn }) {
+function Login({ onLogin, loggedIn, isSuccessMessage }) {
   const { values, handleChange, setValues, errors, isValid } = useForm({
     email: "",
     password: "",
@@ -32,6 +32,8 @@ function Login({ onLogin, loggedIn }) {
       textLink="Регистрация"
       linkTo="/signup"
       onSubmit={handleSubmit}
+      isValid={isValid}
+      isSuccessMessage={isSuccessMessage}
     >
       <label className="auth__label">
         E-mail

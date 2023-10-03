@@ -27,40 +27,29 @@ export const authorize = (email, password) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Accept: "application/json",
     },
     body: JSON.stringify({ email, password }),
   }).then(checkError);
 };
 
-export const getContent = () => {
-  return fetch(`${BASE_URL}/users/me`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  }).then(checkError);
-};
-
 /**получение с сервера данных */
-export const getUserInfo = () => {
+export const getUserInfo = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${localStorage.getItem("token")}`,
+      authorization: `Bearer ${token}`,
     },
   }).then(checkError);
 };
 
 /**изменение данных с сервера */
-export const patchUserInfo = (data) => {
+export const patchUserInfo = (data, token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      authorization: `Bearer ${localStorage.getItem("token")}`,
+      authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       name: data.name,

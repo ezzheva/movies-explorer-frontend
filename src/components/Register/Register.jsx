@@ -4,7 +4,7 @@ import AuthWithForm from "../AuthWithForm/AuthWithForm";
 import useForm from "../../hooks/useForm";
 import { REGEX_NAME, REGEX_EMAIL } from "../../utils/constants";
 
-function Register({ onRegister }) {
+function Register({ onRegister, isSuccessMessage, setIsSuccessMessage }) {
   const { values, handleChange, setValues, errors, isValid } = useForm({
     name: "",
     email: "",
@@ -13,14 +13,17 @@ function Register({ onRegister }) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    if (values.name && values.email && values.password) {
-      onRegister(values);
-    }
+    onRegister(values);
   }
 
   useEffect(() => {
     setValues({ name: "", email: "", password: "" });
   }, [setValues]);
+
+  function handleChangeInput(evt) {
+    handleChange(evt);
+    setIsSuccessMessage("");
+  }
 
   return (
     <AuthWithForm
@@ -31,6 +34,8 @@ function Register({ onRegister }) {
       textLink="Войти"
       linkTo="/signin"
       onSubmit={handleSubmit}
+      isValid={isValid}
+      isSuccessMessage={isSuccessMessage}
     >
       <label className="auth__label">
         Имя
@@ -40,10 +45,10 @@ function Register({ onRegister }) {
           name="name"
           placeholder="Введите Имя"
           minLength="2"
-          maxLength="30"
+          maxLength="40"
           required
           value={values.name || ""}
-          onChange={handleChange}
+          onChange={handleChangeInput}
           pattern={REGEX_NAME}
         />
       </label>
@@ -54,11 +59,11 @@ function Register({ onRegister }) {
         <input
           className="auth__input"
           type="email"
-          name="Введите email"
-          placeholder="E-mail"
+          name="email"
+          placeholder="Введите E-mail"
           required
           value={values.email || ""}
-          onChange={handleChange}
+          onChange={handleChangeInput}
           pattern={REGEX_EMAIL}
         />
       </label>

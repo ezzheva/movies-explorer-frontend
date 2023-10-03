@@ -26,7 +26,7 @@ function Movies({ loggedIn }) {
   );
 
   const [isLoading, setIsLoading] = useState(false); //состояние запроса
-  const [errorSearch, setErrorSearch] = useState(""); // стейт-переменная для отображения ошибки
+  const [errorSearch, setErrorSearch] = useState(""); // переменная для отображения ошибки
 
   const [displayedMovies, setDisplayedMovies] = useState(0);
 
@@ -55,7 +55,7 @@ function Movies({ loggedIn }) {
           const filteredCheckbox = filterShort(filteredMovies, isToggle);
           setMovies(res);
           setFilterMovies(filteredCheckbox);
-          // Сохраняем фильмы в localStorage
+
           localStorage.setItem("movies", JSON.stringify(res));
           localStorage.setItem(
             "filtermovies",

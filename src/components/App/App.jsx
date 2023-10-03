@@ -15,6 +15,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState();
+  const [isSuccessMessage, setIsSuccessMessage] = useState("");
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -25,8 +26,12 @@ function App() {
       .then(() => {
         handleLogin({ email, password });
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        if (error.status === 409) {
+          setIsSuccessMessage("При регистрации пользователя произошла ошибка");
+        } else {
+          setIsSuccessMessage("Пользователь с таким email уже существует");
+        }
       });
   }
   /**получение токена */
@@ -44,15 +49,23 @@ function App() {
           navigate("/movies");
         }
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((error) => {
+        if (error.status === 401) {
+          setIsSuccessMessage("Вы ввели неправильный email или пароль");
+        } else if (error.status === 400) {
+          setIsSuccessMessage(
+            "При авторизации произошла ошибка. Неверный формат email или пароля"
+          );
+        } else {
+          setIsSuccessMessage("При авторизации произошла ошибка");
+        }
       });
   }
-  /**функция что бы не вылетать со страницы */
+
   function handleTokenCheck() {
     const jwt = localStorage.getItem("token");
     if (jwt) {
-      MainApi.getContent(jwt)
+      MainApi.getUserInfo(jwt)
         .then((data) => {
           if (!data) {
             return;
@@ -61,7 +74,8 @@ function App() {
           setCurrentUser(data);
           navigate(location.pathname);
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log("Ошибка:", err);
           setLoggedIn(false);
         });
     }
@@ -69,7 +83,7 @@ function App() {
 
   useEffect(() => {
     handleTokenCheck();
-  }, []);
+  }, [loggedIn]);
 
   return (
     <div className="page">
@@ -97,6 +111,8 @@ function App() {
                 loggedIn={loggedIn}
                 setLoggedIn={setLoggedIn}
                 setCurrentUser={setCurrentUser}
+                setIsSuccessMessage={setIsSuccessMessage}
+                isSuccessMessage={isSuccessMessage}
               />
             }
           />
@@ -104,13 +120,25 @@ function App() {
             exact
             path="/signup"
             element={
-              <Register loggedIn={loggedIn} onRegister={handleRegister} />
+              <Register
+                loggedIn={loggedIn}
+                onRegister={handleRegister}
+                setIsSuccessMessage={setIsSuccessMessage}
+                isSuccessMessage={isSuccessMessage}
+              />
             }
           />
           <Route
             exact
             path="/signin"
-            element={<Login loggedIn={loggedIn} onLogin={handleLogin} />}
+            element={
+              <Login
+                loggedIn={loggedIn}
+                onLogin={handleLogin}
+                setIsSuccessMessage={setIsSuccessMessage}
+                isSuccessMessage={isSuccessMessage}
+              />
+            }
           />
 
           <Route exact path="*" element={<NotFound />} />

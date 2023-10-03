@@ -1,10 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./MoviesCard.css";
-//import Movie from "../../image/movie.svg";
 import { useLocation } from "react-router-dom";
-// import { MOVIES_URL } from "../../../utils/MoviesApi";
 import * as MainApi from "../../../utils/MainApi";
-import * as MoviesApi from "../../../utils/MoviesApi";
 
 function MoviesCard({ movie, saveMovies, setSaveMovies, onDelete }) {
   const srcImg = movie.image.url

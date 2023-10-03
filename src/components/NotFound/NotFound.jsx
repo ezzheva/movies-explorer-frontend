@@ -6,7 +6,7 @@ function NotFound() {
   const navigate = useNavigate();
 
   function goBackPage() {
-    navigate(-1);
+    navigate(-2);
   }
 
   return (
