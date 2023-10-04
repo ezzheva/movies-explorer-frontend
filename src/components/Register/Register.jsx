@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./Register.css";
 import AuthWithForm from "../AuthWithForm/AuthWithForm";
 import useForm from "../../hooks/useForm";
@@ -11,10 +11,20 @@ function Register({ onRegister, isSuccessMessage, setIsSuccessMessage }) {
     password: "",
   });
 
+  const [isLoading, setIsLoading] = useState(false); // Состояние для отслеживания загрузки данных
+
   function handleSubmit(evt) {
     evt.preventDefault();
-    onRegister(values);
+    setIsLoading(true); // Устанавливаем состояние загрузки в true
+    onRegister(values).finally(() => {
+      setIsLoading(false); // После завершения запроса устанавливаем состояние загрузки в false
+    });
   }
+
+  // function handleSubmit(evt) {
+  //   evt.preventDefault();
+  //   onRegister(values);
+  // }
 
   useEffect(() => {
     setValues({ name: "", email: "", password: "" });
@@ -34,7 +44,7 @@ function Register({ onRegister, isSuccessMessage, setIsSuccessMessage }) {
       textLink="Войти"
       linkTo="/signin"
       onSubmit={handleSubmit}
-      isValid={isValid}
+      isValid={isValid && !isLoading}
       isSuccessMessage={isSuccessMessage}
     >
       <label className="auth__label">
