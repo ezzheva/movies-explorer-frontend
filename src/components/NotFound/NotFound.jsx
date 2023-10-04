@@ -5,9 +5,9 @@ import "./NotFound.css";
 function NotFound() {
   const navigate = useNavigate();
 
-  function goBackPage() {
-    navigate(-1);
-  }
+  const goBackPage = () => {
+    navigate(-2);
+  };
 
   return (
     <section className="not-found">

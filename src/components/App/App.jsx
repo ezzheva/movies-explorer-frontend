@@ -23,6 +23,7 @@ function App() {
 
   //регистрация пользователя
   function handleRegister({ name, email, password }) {
+    setIsLoading(true);
     MainApi.register(name, email, password)
       .then(() => {
         handleLogin({ email, password });
@@ -33,21 +34,21 @@ function App() {
         } else {
           setIsSuccessMessage("При регистрации пользователя произошла ошибка");
         }
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
   function handleLogin({ email, password }) {
+    setIsLoading(true);
     MainApi.authorize(email, password)
       .then((res) => {
         if (res) {
           localStorage.setItem("token", res.token);
-          return res;
-        }
-      })
-      .then((res) => {
-        if (res) {
           setLoggedIn(true);
           navigate("/movies");
+          setCurrentUser(res.user);
         }
       })
       .catch((error) => {
@@ -56,6 +57,9 @@ function App() {
         } else {
           setIsSuccessMessage("При авторизации произошла ошибка");
         }
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
   /**получение токена */
@@ -80,27 +84,24 @@ function App() {
 
   useEffect(() => {
     handleTokenCheck();
-  }, [loggedIn]);
+  }, []);
 
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
         <Routes>
-          <Route exact path="/" element={<Main loggedIn={loggedIn} />} />
+          <Route path="/" element={<Main loggedIn={loggedIn} />} />
           <Route
-            exact
             path="/movies"
             element={<ProtectedRoute element={Movies} loggedIn={loggedIn} />}
           />
           <Route
-            exact
             path="/saved-movies"
             element={
               <ProtectedRoute element={SavedMovies} loggedIn={loggedIn} />
             }
           />
           <Route
-            exact
             path="/profile"
             element={
               <ProtectedRoute
@@ -116,7 +117,6 @@ function App() {
             }
           />
           <Route
-            exact
             path="/signup"
             element={
               <Register
@@ -125,12 +125,10 @@ function App() {
                 setIsSuccessMessage={setIsSuccessMessage}
                 isSuccessMessage={isSuccessMessage}
                 isLoading={isLoading}
-                setIsLoading={setIsLoading}
               />
             }
           />
           <Route
-            exact
             path="/signin"
             element={
               <Login
@@ -139,12 +137,11 @@ function App() {
                 setIsSuccessMessage={setIsSuccessMessage}
                 isSuccessMessage={isSuccessMessage}
                 isLoading={isLoading}
-                setIsLoading={setIsLoading}
               />
             }
           />
 
-          <Route exact path="*" element={<NotFound />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </CurrentUserContext.Provider>
     </div>

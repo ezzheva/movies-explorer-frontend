@@ -39,20 +39,18 @@ function Profile({
     setIsLoading(true);
     handleUpdateUser(values);
   }
+
   /**редактирование провиля */
   function handleUpdateUser(data) {
     const jwt = localStorage.getItem("token");
     MainApi.patchUserInfo(data, jwt)
       .then(() => {
-        setCurrentUser({
-          ...currentUser,
-          name: data.name,
-          email: data.email,
-        });
+        setCurrentUser(data);
         setIsSuccessMessage("Данные обновлены успешно!");
+        console.log(data);
       })
       .catch((err) => {
-        if (err.status === 409) {
+        if (err === 409) {
           setIsSuccessMessage("При обновлении профиля произошла ошибка");
         } else {
           setIsSuccessMessage("Пользователь с таким email уже существует");
@@ -68,6 +66,9 @@ function Profile({
     if (currentUser) {
       setValues(currentUser);
       setIsSubmit(false);
+      setIsNameChanged(false);
+      setIsEmailChanged(false);
+      setIsSuccessMessage("");
     }
   }, [currentUser, setValues]);
 
@@ -115,7 +116,7 @@ function Profile({
                 value={values.name || ""}
                 onChange={handleChangeInput}
                 pattern={REGEX_NAME}
-                disabled={isSubmit || isLoading}
+                disabled={!isSubmit || isLoading}
               ></input>
             </label>
             {!isValid && <span className="profile__error">{errors.name}</span>}
@@ -133,7 +134,7 @@ function Profile({
                 value={values.email || ""}
                 onChange={handleChangeInput}
                 pattern={REGEX_EMAIL}
-                disabled={isSubmit || isLoading}
+                disabled={!isSubmit || isLoading}
               ></input>
             </label>
             {!isValid && <span className="profile__error">{errors.email}</span>}
@@ -161,7 +162,11 @@ function Profile({
                 <button
                   className="profile__button-save"
                   type="submit"
-                  disabled={!isValid || (!isNameChanged && !isEmailChanged)}
+                  disabled={
+                    !isValid ||
+                    (!isNameChanged && !isEmailChanged) ||
+                    isSuccessMessage
+                  }
                 >
                   Сохранить
                 </button>

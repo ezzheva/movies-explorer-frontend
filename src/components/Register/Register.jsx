@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import "./Register.css";
 import AuthWithForm from "../AuthWithForm/AuthWithForm";
 import useForm from "../../hooks/useForm";
@@ -9,7 +9,6 @@ function Register({
   isSuccessMessage,
   setIsSuccessMessage,
   isLoading,
-  setIsLoading,
 }) {
   const { values, handleChange, setValues, errors, isValid } = useForm({
     name: "",
@@ -19,10 +18,7 @@ function Register({
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    setIsLoading(true); // Устанавливаем состояние загрузки в true
-    onRegister(values).finally(() => {
-      setIsLoading(false); // После завершения запроса устанавливаем состояние загрузки в false
-    });
+    onRegister(values);
   }
 
   useEffect(() => {
@@ -59,6 +55,7 @@ function Register({
           value={values.name || ""}
           onChange={handleChangeInput}
           pattern={REGEX_NAME}
+          disabled={isLoading}
         />
       </label>
       {!isValid && <span className="auth__input-error">{errors.name}</span>}
@@ -74,6 +71,7 @@ function Register({
           value={values.email || ""}
           onChange={handleChangeInput}
           pattern={REGEX_EMAIL}
+          disabled={isLoading}
         />
       </label>
       {!isValid && <span className="auth__input-error">{errors.email}</span>}
@@ -85,11 +83,12 @@ function Register({
           type="password"
           name="password"
           placeholder="Пароль"
-          minLength="4"
+          minLength="6"
           maxLength="30"
           required
           value={values.password || ""}
           onChange={handleChange}
+          disabled={isLoading}
         />
       </label>
       {!isValid && <span className="auth__input-error">{errors.password}</span>}

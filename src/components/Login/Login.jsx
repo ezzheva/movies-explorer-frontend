@@ -10,7 +10,7 @@ function Login({
   loggedIn,
   isSuccessMessage,
   isLoading,
-  setIsLoading,
+  setIsSuccessMessage,
 }) {
   const { values, handleChange, setValues, errors, isValid } = useForm({
     email: "",
@@ -19,10 +19,12 @@ function Login({
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    setIsLoading(true); // Устанавливаем состояние загрузки в true
-    onLogin(values).finally(() => {
-      setIsLoading(false); // После завершения запроса устанавливаем состояние загрузки в false
-    });
+    onLogin(values);
+  }
+
+  function handleChangeInput(evt) {
+    handleChange(evt);
+    setIsSuccessMessage("");
   }
 
   useEffect(() => {
@@ -52,9 +54,10 @@ function Login({
           name="email"
           placeholder="Введите E-mail"
           required
-          onChange={handleChange}
+          onChange={handleChangeInput}
           value={values.email || ""}
           pattern={REGEX_EMAIL}
+          disabled={isLoading}
         />
         {!isValid && <span className="auth__input-error">{errors.email}</span>}
       </label>
@@ -66,11 +69,12 @@ function Login({
           type="password"
           name="password"
           placeholder="Пароль"
-          minLength="4"
+          minLength="6"
           maxLength="30"
           required
-          onChange={handleChange}
+          onChange={handleChangeInput}
           value={values.password || ""}
+          disabled={isLoading}
         />
         {!isValid && (
           <span className="auth__input-error">{errors.password}</span>
