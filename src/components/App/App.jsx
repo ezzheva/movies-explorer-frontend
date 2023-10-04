@@ -16,6 +16,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState();
   const [isSuccessMessage, setIsSuccessMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Состояние для отслеживания загрузки данных
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -109,6 +110,8 @@ function App() {
                 setCurrentUser={setCurrentUser}
                 setIsSuccessMessage={setIsSuccessMessage}
                 isSuccessMessage={isSuccessMessage}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
               />
             }
           />
@@ -121,6 +124,8 @@ function App() {
                 onRegister={handleRegister}
                 setIsSuccessMessage={setIsSuccessMessage}
                 isSuccessMessage={isSuccessMessage}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
               />
             }
           />
@@ -133,6 +138,8 @@ function App() {
                 onLogin={handleLogin}
                 setIsSuccessMessage={setIsSuccessMessage}
                 isSuccessMessage={isSuccessMessage}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
               />
             }
           />
