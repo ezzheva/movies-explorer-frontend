@@ -28,15 +28,15 @@ function App() {
       })
       .catch((error) => {
         if (error.status === 409) {
-          setIsSuccessMessage("При регистрации пользователя произошла ошибка");
-        } else {
           setIsSuccessMessage("Пользователь с таким email уже существует");
+        } else {
+          setIsSuccessMessage("При регистрации пользователя произошла ошибка");
         }
       });
   }
-  /**получение токена */
-  function handleLogin(data) {
-    MainApi.authorize(data.email, data.password)
+
+  function handleLogin({ email, password }) {
+    MainApi.authorize(email, password)
       .then((res) => {
         if (res) {
           localStorage.setItem("token", res.token);
@@ -50,22 +50,18 @@ function App() {
         }
       })
       .catch((error) => {
-        if (error.status === 401) {
+        if (error.status === 400) {
           setIsSuccessMessage("Вы ввели неправильный email или пароль");
-        } else if (error.status === 400) {
-          setIsSuccessMessage(
-            "При авторизации произошла ошибка. Неверный формат email или пароля"
-          );
         } else {
           setIsSuccessMessage("При авторизации произошла ошибка");
         }
       });
   }
-
+  /**получение токена */
   function handleTokenCheck() {
     const jwt = localStorage.getItem("token");
     if (jwt) {
-      MainApi.getUserInfo(jwt)
+      MainApi.getContent(jwt)
         .then((data) => {
           if (!data) {
             return;

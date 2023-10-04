@@ -33,7 +33,7 @@ export const authorize = (email, password) => {
 };
 
 /**получение с сервера данных */
-export const getUserInfo = (token) => {
+export const getContent = (token) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
     headers: {
