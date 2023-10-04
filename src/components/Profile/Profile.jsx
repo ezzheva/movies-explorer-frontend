@@ -14,6 +14,8 @@ function Profile({
   setCurrentUser,
   isSuccessMessage,
   setIsSuccessMessage,
+  isLoading,
+  setIsLoading,
 }) {
   const navigate = useNavigate();
   const currentUser = useContext(CurrentUserContext);
@@ -34,6 +36,7 @@ function Profile({
 
   function handleSubmit(evt) {
     evt.preventDefault();
+    setIsLoading(true);
     handleUpdateUser(values);
   }
   /**редактирование провиля */
@@ -54,6 +57,9 @@ function Profile({
         } else {
           setIsSuccessMessage("Пользователь с таким email уже существует");
         }
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
@@ -109,7 +115,7 @@ function Profile({
                 value={values.name || ""}
                 onChange={handleChangeInput}
                 pattern={REGEX_NAME}
-                disabled={!isSubmit}
+                disabled={isSubmit || isLoading}
               ></input>
             </label>
             {!isValid && <span className="profile__error">{errors.name}</span>}
@@ -127,7 +133,7 @@ function Profile({
                 value={values.email || ""}
                 onChange={handleChangeInput}
                 pattern={REGEX_EMAIL}
-                disabled={!isSubmit}
+                disabled={isSubmit || isLoading}
               ></input>
             </label>
             {!isValid && <span className="profile__error">{errors.email}</span>}
@@ -141,6 +147,7 @@ function Profile({
                     className="profile__button-edit"
                     type="button"
                     onClick={handleSaveButton}
+                    disabled={isLoading}
                   >
                     Редактировать
                   </button>

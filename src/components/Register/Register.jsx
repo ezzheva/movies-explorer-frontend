@@ -4,14 +4,18 @@ import AuthWithForm from "../AuthWithForm/AuthWithForm";
 import useForm from "../../hooks/useForm";
 import { REGEX_NAME, REGEX_EMAIL } from "../../utils/constants";
 
-function Register({ onRegister, isSuccessMessage, setIsSuccessMessage }) {
+function Register({
+  onRegister,
+  isSuccessMessage,
+  setIsSuccessMessage,
+  isLoading,
+  setIsLoading,
+}) {
   const { values, handleChange, setValues, errors, isValid } = useForm({
     name: "",
     email: "",
     password: "",
   });
-
-  const [isLoading, setIsLoading] = useState(false); // Состояние для отслеживания загрузки данных
 
   function handleSubmit(evt) {
     evt.preventDefault();
@@ -20,11 +24,6 @@ function Register({ onRegister, isSuccessMessage, setIsSuccessMessage }) {
       setIsLoading(false); // После завершения запроса устанавливаем состояние загрузки в false
     });
   }
-
-  // function handleSubmit(evt) {
-  //   evt.preventDefault();
-  //   onRegister(values);
-  // }
 
   useEffect(() => {
     setValues({ name: "", email: "", password: "" });

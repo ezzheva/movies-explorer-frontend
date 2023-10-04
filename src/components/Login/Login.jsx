@@ -5,7 +5,13 @@ import AuthWithForm from "../AuthWithForm/AuthWithForm";
 import useForm from "../../hooks/useForm";
 import { REGEX_EMAIL } from "../../utils/constants";
 
-function Login({ onLogin, loggedIn, isSuccessMessage }) {
+function Login({
+  onLogin,
+  loggedIn,
+  isSuccessMessage,
+  isLoading,
+  setIsLoading,
+}) {
   const { values, handleChange, setValues, errors, isValid } = useForm({
     email: "",
     password: "",
@@ -13,7 +19,10 @@ function Login({ onLogin, loggedIn, isSuccessMessage }) {
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    onLogin(values);
+    setIsLoading(true); // Устанавливаем состояние загрузки в true
+    onLogin(values).finally(() => {
+      setIsLoading(false); // После завершения запроса устанавливаем состояние загрузки в false
+    });
   }
 
   useEffect(() => {
@@ -32,7 +41,7 @@ function Login({ onLogin, loggedIn, isSuccessMessage }) {
       textLink="Регистрация"
       linkTo="/signup"
       onSubmit={handleSubmit}
-      isValid={isValid}
+      isValid={isValid && !isLoading}
       isSuccessMessage={isSuccessMessage}
     >
       <label className="auth__label">
