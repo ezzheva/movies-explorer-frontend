@@ -1,5 +1,5 @@
 import { useState, useCallback } from "react";
-import { REGEX_NAME } from "../../utils/constants";
+import { REGEX_NAME } from "../utils/constants";
 
 export default function useForm(inputValues) {
   const [values, setValues] = useState(inputValues);
