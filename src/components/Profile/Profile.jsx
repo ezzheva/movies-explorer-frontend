@@ -26,6 +26,7 @@ function Profile({
   const [isSubmit, setIsSubmit] = useState(false); //кнопка редактирования
   const [isNameChanged, setIsNameChanged] = useState(false); //состояние изменения имени
   const [isEmailChanged, setIsEmailChanged] = useState(false); //состояние изменения email
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   /**показываем кнопку сохранить */
   function handleSaveButton(evt) {
@@ -36,6 +37,7 @@ function Profile({
 
   function handleSubmit(evt) {
     evt.preventDefault();
+    setIsSubmitting(true);
     setIsLoading(true);
     handleUpdateUser(values);
   }
@@ -47,7 +49,6 @@ function Profile({
       .then(() => {
         setCurrentUser(data);
         setIsSuccessMessage("Данные обновлены успешно!");
-        console.log(data);
       })
       .catch((err) => {
         if (err === 409) {
@@ -165,7 +166,8 @@ function Profile({
                   disabled={
                     !isValid ||
                     (!isNameChanged && !isEmailChanged) ||
-                    isSuccessMessage
+                    isSuccessMessage ||
+                    isSubmitting
                   }
                 >
                   Сохранить

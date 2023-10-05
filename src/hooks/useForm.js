@@ -1,4 +1,5 @@
 import { useState, useCallback } from "react";
+import { REGEX_NAME } from "../../utils/constants";
 
 export default function useForm(inputValues) {
   const [values, setValues] = useState(inputValues);
@@ -7,7 +8,7 @@ export default function useForm(inputValues) {
 
   const handleChange = (event) => {
     const { value, name } = event.target;
-    if (name === "name" && /\d/.test(value)) {
+    if (name === "name" && !REGEX_NAME.test(value)) {
       setErrors({
         ...errors,
         [name]: "Имя может содержать латиницу, кириллицу пробел и дефис",
