@@ -13,7 +13,7 @@ import * as MainApi from "../../utils/MainApi";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
   const [currentUser, setCurrentUser] = useState();
   const [isSuccessMessage, setIsSuccessMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false); // Состояние для отслеживания загрузки данных
@@ -73,7 +73,7 @@ function App() {
           }
           setLoggedIn(true);
           setCurrentUser(data);
-          navigate(location.pathname);
+          // navigate(location.pathname);
         })
         .catch((err) => {
           console.log("Ошибка:", err);
