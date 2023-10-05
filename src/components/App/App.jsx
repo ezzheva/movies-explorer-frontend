@@ -19,7 +19,6 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   //регистрация пользователя
   function handleRegister({ name, email, password }) {
