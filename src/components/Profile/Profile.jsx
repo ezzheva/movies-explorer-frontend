@@ -70,6 +70,7 @@ function Profile({
       setIsNameChanged(false);
       setIsEmailChanged(false);
       setIsSuccessMessage("");
+      setIsSubmitting(false);
     }
   }, [currentUser, setValues]);
 
