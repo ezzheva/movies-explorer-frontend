@@ -50,7 +50,7 @@ function Register({
           name="name"
           placeholder="Введите Имя"
           minLength="2"
-          maxLength="40"
+          maxLength="30"
           required
           value={values.name || ""}
           onChange={handleChangeInput}

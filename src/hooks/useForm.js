@@ -7,9 +7,18 @@ export default function useForm(inputValues) {
 
   const handleChange = (event) => {
     const { value, name } = event.target;
+    if (name === "name" && /\d/.test(value)) {
+      setErrors({
+        ...errors,
+        [name]: "Имя может содержать латиницу, кириллицу пробел и дефис",
+      });
+      setIsValid(false);
+    } else {
+      setErrors({ ...errors, [name]: event.target.validationMessage });
+      setIsValid(event.target.closest("form").checkValidity());
+    }
+
     setValues({ ...values, [name]: value });
-    setErrors({ ...errors, [name]: event.target.validationMessage });
-    setIsValid(event.target.closest("form").checkValidity());
   };
 
   const resetForm = useCallback(
