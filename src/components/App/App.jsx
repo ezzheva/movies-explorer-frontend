@@ -16,7 +16,7 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
   const [currentUser, setCurrentUser] = useState();
   const [isSuccessMessage, setIsSuccessMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Состояние для отслеживания загрузки данных
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -73,7 +73,6 @@ function App() {
           }
           setLoggedIn(true);
           setCurrentUser(data);
-          // navigate(location.pathname);
         })
         .catch((err) => {
           console.log("Ошибка:", err);
