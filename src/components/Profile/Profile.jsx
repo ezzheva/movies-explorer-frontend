@@ -62,13 +62,11 @@ function Profile({
 
   /**запрос прошел убираем кнопку */
   useEffect(() => {
-    if (currentUser) {
-      setValues(currentUser);
-      setIsSubmit(false);
-      setIsNameChanged(false);
-      setIsEmailChanged(false);
-      setIsSuccessMessage("");
-    }
+    setValues(currentUser);
+    setIsSubmit(false);
+    setIsNameChanged(false);
+    setIsEmailChanged(false);
+    setIsSuccessMessage("");
   }, [currentUser, setValues]);
 
   /**удаляем токен, выходим из системы */
@@ -100,9 +98,7 @@ function Profile({
       <Header loggedIn={!loggedIn} />
       <main>
         <section className="profile">
-          <h1 className="profile__title">
-            Привет, {currentUser ? currentUser.name : ""}!
-          </h1>
+          <h1 className="profile__title">Привет, {currentUser.name}!</h1>
           <form className="profile__form" onSubmit={handleSubmit}>
             <label className="profile__label">
               <span className="profile__label-title">Имя</span>

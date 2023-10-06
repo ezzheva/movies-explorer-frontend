@@ -13,8 +13,12 @@ import * as MainApi from "../../utils/MainApi";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState();
+  const [loggedIn, setLoggedIn] = useState(false); //!!localStorage.getItem("token")
+  const [currentUser, setCurrentUser] = useState({
+    name: "",
+    email: "",
+    _id: "",
+  });
   const [isSuccessMessage, setIsSuccessMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false); // Состояние для отслеживания загрузки данных
 
@@ -86,6 +90,10 @@ function App() {
     handleTokenCheck();
   }, []);
 
+  function handleBackPage() {
+    navigate(-2);
+  }
+
   return (
     <div className="page">
       <CurrentUserContext.Provider value={currentUser}>
@@ -141,7 +149,7 @@ function App() {
             }
           />
 
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<NotFound onBackPage={handleBackPage} />} />
         </Routes>
       </CurrentUserContext.Provider>
     </div>

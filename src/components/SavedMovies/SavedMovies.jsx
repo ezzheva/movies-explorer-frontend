@@ -16,6 +16,7 @@ function SavedMovies({ loggedIn }) {
   const [errorSearch, setErrorSearch] = useState(""); // стейт-переменная для отображения ошибки
 
   useEffect(() => {
+    setIsLoading(true);
     MainApi.getMovies()
       .then((res) => {
         setSaveMovies(res);
@@ -25,7 +26,7 @@ function SavedMovies({ loggedIn }) {
         console.log(err);
       })
       .finally(() => setIsLoading(false));
-  }, [setSaveMovies]);
+  }, []);
 
   function handleDeleteMovie(movieId) {
     MainApi.deleteMovie(movieId)
