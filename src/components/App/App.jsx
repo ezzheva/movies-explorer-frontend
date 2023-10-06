@@ -20,7 +20,7 @@ function App() {
     _id: "",
   });
   const [isSuccessMessage, setIsSuccessMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Состояние для отслеживания загрузки данных
+  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();

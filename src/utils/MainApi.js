@@ -1,5 +1,5 @@
-export const BASE_URL = "http://127.0.0.1:4000";
-//"https://api.movies-explorer.nomoredomainsicu.ru";; бэк
+export const BASE_URL = "https://api.movies-explorer.nomoredomainsicu.ru";
+// "http://127.0.0.1:4000"; бэк
 
 /**проверка статуса ошибки*/
 const checkError = (res) => {
