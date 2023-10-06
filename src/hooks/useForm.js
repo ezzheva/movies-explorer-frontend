@@ -1,5 +1,4 @@
 import { useState, useCallback } from "react";
-import { REGEX_NAME } from "../utils/constants";
 
 export default function useForm(inputValues) {
   const [values, setValues] = useState(inputValues);
@@ -8,18 +7,9 @@ export default function useForm(inputValues) {
 
   const handleChange = (event) => {
     const { value, name } = event.target;
-    if (name === "name" && !REGEX_NAME.test(value)) {
-      setErrors({
-        ...errors,
-        [name]: "Имя может содержать латиницу, кириллицу пробел и дефис",
-      });
-      setIsValid(false);
-    } else {
-      setErrors({ ...errors, [name]: event.target.validationMessage });
-      setIsValid(event.target.closest("form").checkValidity());
-    }
-
     setValues({ ...values, [name]: value });
+    setErrors({ ...errors, [name]: event.target.validationMessage });
+    setIsValid(event.target.closest("form").checkValidity());
   };
 
   const resetForm = useCallback(

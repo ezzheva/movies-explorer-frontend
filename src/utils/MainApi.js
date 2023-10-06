@@ -1,5 +1,4 @@
-export const BASE_URL = "https://api.movies-explorer.nomoredomainsicu.ru";
-//"http://127.0.0.1:4000";//бэк
+export const BASE_URL = "http://127.0.0.1:4000"; // "https://api.movies-explorer.nomoredomainsicu.ru"; //бэк
 
 /**проверка статуса ошибки*/
 const checkError = (res) => {
@@ -42,7 +41,6 @@ export const getContent = (token) => {
     },
   }).then(checkError);
 };
-
 /**изменение данных с сервера */
 export const patchUserInfo = (data, token) => {
   return fetch(`${BASE_URL}/users/me`, {

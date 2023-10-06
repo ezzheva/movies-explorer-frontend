@@ -26,7 +26,6 @@ function Profile({
   const [isSubmit, setIsSubmit] = useState(false); //кнопка редактирования
   const [isNameChanged, setIsNameChanged] = useState(false); //состояние изменения имени
   const [isEmailChanged, setIsEmailChanged] = useState(false); //состояние изменения email
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   /**показываем кнопку сохранить */
   function handleSaveButton(evt) {
@@ -37,7 +36,6 @@ function Profile({
 
   function handleSubmit(evt) {
     evt.preventDefault();
-    setIsSubmitting(true);
     setIsLoading(true);
     handleUpdateUser(values);
   }
@@ -70,7 +68,6 @@ function Profile({
       setIsNameChanged(false);
       setIsEmailChanged(false);
       setIsSuccessMessage("");
-      setIsSubmitting(false);
     }
   }, [currentUser, setValues]);
 
@@ -103,7 +100,9 @@ function Profile({
       <Header loggedIn={!loggedIn} />
       <main>
         <section className="profile">
-          <h1 className="profile__title">Привет, {currentUser.name}!</h1>
+          <h1 className="profile__title">
+            Привет, {currentUser ? currentUser.name : ""}!
+          </h1>
           <form className="profile__form" onSubmit={handleSubmit}>
             <label className="profile__label">
               <span className="profile__label-title">Имя</span>
@@ -167,8 +166,7 @@ function Profile({
                   disabled={
                     !isValid ||
                     (!isNameChanged && !isEmailChanged) ||
-                    isSuccessMessage ||
-                    isSubmitting
+                    isSuccessMessage
                   }
                 >
                   Сохранить

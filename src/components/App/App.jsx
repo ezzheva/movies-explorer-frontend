@@ -13,12 +13,13 @@ import * as MainApi from "../../utils/MainApi";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem("token"));
+  const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState();
   const [isSuccessMessage, setIsSuccessMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false); // Состояние для отслеживания загрузки данных
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   //регистрация пользователя
   function handleRegister({ name, email, password }) {
@@ -72,6 +73,7 @@ function App() {
           }
           setLoggedIn(true);
           setCurrentUser(data);
+          navigate(location.pathname);
         })
         .catch((err) => {
           console.log("Ошибка:", err);
