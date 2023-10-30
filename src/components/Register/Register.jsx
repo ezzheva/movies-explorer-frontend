@@ -1,8 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Register.css";
 import AuthWithForm from "../AuthWithForm/AuthWithForm";
+import useForm from "../../hooks/useForm";
+import { REGEX_NAME, REGEX_EMAIL } from "../../utils/constants";
 
-function Register() {
+function Register({
+  onRegister,
+  isSuccessMessage,
+  setIsSuccessMessage,
+  isLoading,
+}) {
+  const { values, handleChange, setValues, errors, isValid } = useForm({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    onRegister(values);
+  }
+
+  useEffect(() => {
+    setValues({ name: "", email: "", password: "" });
+  }, [setValues]);
+
+  function handleChangeInput(evt) {
+    handleChange(evt);
+    setIsSuccessMessage("");
+  }
+
   return (
     <AuthWithForm
       nameForm="register"
@@ -11,6 +38,9 @@ function Register() {
       text="Уже зарегистрированы?"
       textLink="Войти"
       linkTo="/signin"
+      onSubmit={handleSubmit}
+      isValid={isValid && !isLoading}
+      isSuccessMessage={isSuccessMessage}
     >
       <label className="auth__label">
         Имя
@@ -18,15 +48,17 @@ function Register() {
           className="auth__input"
           type="text"
           name="name"
-          placeholder="Имя"
+          placeholder="Введите Имя"
           minLength="2"
           maxLength="30"
           required
+          value={values.name || ""}
+          onChange={handleChangeInput}
+          pattern={REGEX_NAME}
+          disabled={isLoading}
         />
       </label>
-      <span className="auth__input-error name-error">
-        Что-то пошло не так...
-      </span>
+      {!isValid && <span className="auth__input-error">{errors.name}</span>}
 
       <label className="auth__label">
         E-mail
@@ -34,13 +66,15 @@ function Register() {
           className="auth__input"
           type="email"
           name="email"
-          placeholder="E-mail"
+          placeholder="Введите E-mail"
           required
+          value={values.email || ""}
+          onChange={handleChangeInput}
+          pattern={REGEX_EMAIL}
+          disabled={isLoading}
         />
       </label>
-      <span className="auth__input-error email-error">
-        Что-то пошло не так...
-      </span>
+      {!isValid && <span className="auth__input-error">{errors.email}</span>}
 
       <label className="auth__label">
         Пароль
@@ -49,14 +83,15 @@ function Register() {
           type="password"
           name="password"
           placeholder="Пароль"
-          minLength="4"
+          minLength="6"
           maxLength="30"
           required
+          value={values.password || ""}
+          onChange={handleChange}
+          disabled={isLoading}
         />
       </label>
-      <span className="auth__input-error password-error">
-        Что-то пошло не так...
-      </span>
+      {!isValid && <span className="auth__input-error">{errors.password}</span>}
     </AuthWithForm>
   );
 }

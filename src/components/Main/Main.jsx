@@ -8,10 +8,10 @@ import Portfolio from "./Portfolio/Portfolio";
 import Promo from "./Promo/Promo";
 import Techs from "./Techs/Techs";
 
-function Main() {
+function Main({ loggedIn }) {
   return (
     <>
-      <Header />
+      <Header loggedIn={loggedIn} />
       <main className="main">
         <Promo />
         <AboutProject />

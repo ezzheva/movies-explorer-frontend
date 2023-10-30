@@ -1,8 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Navigate } from "react-router-dom";
 import "./Login.css";
 import AuthWithForm from "../AuthWithForm/AuthWithForm";
+import useForm from "../../hooks/useForm";
+import { REGEX_EMAIL } from "../../utils/constants";
 
-function Register() {
+function Login({
+  onLogin,
+  loggedIn,
+  isSuccessMessage,
+  isLoading,
+  setIsSuccessMessage,
+}) {
+  const { values, handleChange, setValues, errors, isValid } = useForm({
+    email: "",
+    password: "",
+  });
+
+  function handleSubmit(evt) {
+    evt.preventDefault();
+    onLogin(values);
+  }
+
+  function handleChangeInput(evt) {
+    handleChange(evt);
+    setIsSuccessMessage("");
+  }
+
+  useEffect(() => {
+    setValues({ email: "", password: "" });
+  }, [setValues]);
+
+  if (loggedIn) {
+    return <Navigate to="/movies" />;
+  }
   return (
     <AuthWithForm
       nameForm="login"
@@ -11,6 +42,9 @@ function Register() {
       text="Ещё не зарегистрированы?"
       textLink="Регистрация"
       linkTo="/signup"
+      onSubmit={handleSubmit}
+      isValid={isValid && !isLoading}
+      isSuccessMessage={isSuccessMessage}
     >
       <label className="auth__label">
         E-mail
@@ -18,12 +52,14 @@ function Register() {
           className="auth__input"
           type="email"
           name="email"
-          placeholder="E-mail"
+          placeholder="Введите E-mail"
           required
+          onChange={handleChangeInput}
+          value={values.email || ""}
+          pattern={REGEX_EMAIL}
+          disabled={isLoading}
         />
-        <span className="auth__input-error email-error">
-          Что-то пошло не так...
-        </span>
+        {!isValid && <span className="auth__input-error">{errors.email}</span>}
       </label>
 
       <label className="auth__label">
@@ -33,16 +69,19 @@ function Register() {
           type="password"
           name="password"
           placeholder="Пароль"
-          minLength="4"
+          minLength="6"
           maxLength="30"
           required
+          onChange={handleChangeInput}
+          value={values.password || ""}
+          disabled={isLoading}
         />
-        <span className="auth__input-error password-error">
-          Что-то пошло не так...
-        </span>
+        {!isValid && (
+          <span className="auth__input-error">{errors.password}</span>
+        )}
       </label>
     </AuthWithForm>
   );
 }
 
-export default Register;
+export default Login;
